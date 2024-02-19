@@ -7,6 +7,7 @@ import {
   DialogPortal,
   DialogTrigger,
 } from "./ui/dialog";
+import { Button } from "./ui/button";
 
 interface NoteCardProps {
   note: {
@@ -27,11 +28,27 @@ const NoteCard = ({ note }: NoteCardProps) => {
       </DialogTrigger>
       <DialogPortal>
         <DialogOverlay className="inset-0 fixed bg-black/50" />
-        <DialogContent className="bg-slate-700 border-none ring-2 ring-slate-500 outline-none h-[60vh]">
-          <div className="flex flex-1 flex-col gap-3 p-5">
-            <span className="text-sm font-medium text-slate-300">
-              {formatDistanceToNow(note.date, { locale: ptBR })}
-            </span>
+        <DialogContent className="flex-col bg-slate-700 border-none ring-2 ring-slate-500 outline-none h-[60vh]">
+          <div className="flex flex-col justify-between">
+            <div className="flex flex-1 flex-col gap-3 p-5">
+              <span className="text-sm font-medium text-slate-300">
+                {formatDistanceToNow(note.date, {
+                  locale: ptBR,
+                  addSuffix: true,
+                })}
+              </span>
+              <p className="text-sm leading-6 text-slate-200">{note.content}</p>
+            </div>
+            <Button
+              type="button"
+              className="bg-slate-800 text-sm text-slate-300 w-full group"
+            >
+              Deseja{" "}
+              <span className="text-red-400 group-hover:underline">
+                apagar essa nota
+              </span>
+              ?
+            </Button>
           </div>
         </DialogContent>
       </DialogPortal>

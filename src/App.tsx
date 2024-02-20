@@ -27,7 +27,11 @@ function App() {
       content,
     };
 
-    setNotes([newNote, ...notes]);
+    const notesArray = [newNote, ...notes];
+
+    setNotes(notesArray);
+
+    localStorage.setItem("notes", JSON.stringify(notesArray));
   }
 
   function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
@@ -35,8 +39,15 @@ function App() {
 
     setSearch(query);
   }
+
+  const filteredNotes =
+    search !== ""
+      ? notes.filter((note) =>
+          note.content.toLowerCase().includes(search.toLowerCase())
+        )
+      : notes;
   return (
-    <div className="mx-auto max-w-6xl my-12 space-y-6">
+    <div className="mx-auto max-w-6xl my-12 space-y-6 px-5 md:px-0">
       <form className="w-full">
         <input
           type="text"
@@ -49,7 +60,7 @@ function App() {
 
       <div className="grid grid-cols-3 auto-rows-[250px] gap-6">
         <NewCard onNoteCreated={onNoteCreated} />
-        {notes.map((note) => (
+        {filteredNotes.map((note) => (
           <NoteCard key={note.id} note={note} />
         ))}
       </div>

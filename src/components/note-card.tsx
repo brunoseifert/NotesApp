@@ -11,12 +11,15 @@ import { Button } from "./ui/button";
 
 interface NoteCardProps {
   note: {
+    id: string;
     date: Date;
     content: string;
   };
+
+  onNoteDeleted: (id: string) => void;
 }
 
-const NoteCard = ({ note }: NoteCardProps) => {
+const NoteCard = ({ note, onNoteDeleted }: NoteCardProps) => {
   return (
     <Dialog>
       <DialogTrigger className="rounded-md flex-col text-left bg-slate-800 outline-none p-5 space-y-2 overflow-hidden relative hover:ring-2 hover:ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400     ">
@@ -43,6 +46,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
               <p className="text-sm leading-6 text-slate-200">{note.content}</p>
             </div>
             <Button
+              onClick={() => onNoteDeleted(note.id)}
               type="button"
               className="bg-slate-800 text-sm text-slate-300 w-full group"
             >

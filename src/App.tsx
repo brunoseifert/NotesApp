@@ -40,6 +40,14 @@ function App() {
     setSearch(query);
   }
 
+  function onNoteDeleted(id: string) {
+    const newNotes = notes.filter((note) => note.id !== id);
+
+    setNotes(newNotes);
+
+    localStorage.setItem("notes", JSON.stringify(newNotes));
+  }
+
   const filteredNotes =
     search !== ""
       ? notes.filter((note) =>
@@ -47,7 +55,7 @@ function App() {
         )
       : notes;
   return (
-    <div className="mx-auto max-w-6xl my-12 space-y-6 px-5 md:px-0">
+    <div className="mx-auto max-w-6xl my-12 space-y-6 px-5">
       <form className="w-full">
         <input
           type="text"
@@ -58,10 +66,10 @@ function App() {
       </form>
       <div className="h-px bg-slate-700" />
 
-      <div className="grid grid-cols-3 auto-rows-[250px] gap-6">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 auto-rows-[250px] gap-6">
         <NewCard onNoteCreated={onNoteCreated} />
         {filteredNotes.map((note) => (
-          <NoteCard key={note.id} note={note} />
+          <NoteCard key={note.id} note={note} onNoteDeleted={onNoteDeleted} />
         ))}
       </div>
     </div>

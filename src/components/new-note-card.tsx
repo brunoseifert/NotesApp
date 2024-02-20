@@ -7,6 +7,7 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { ChangeEvent, FocusEvent, FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 interface NewCardProps {
   onNoteCreated: (content: string) => void;
@@ -48,6 +49,8 @@ const NewCard = ({ onNoteCreated }: NewCardProps) => {
 
     setContent("");
     setShouldShowOnboarding(true);
+
+    toast.success("Nota salva com sucesso!");
   }
 
   function handleStartRecording() {

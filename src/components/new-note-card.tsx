@@ -8,7 +8,11 @@ import {
 import { Button } from "./ui/button";
 import { ChangeEvent, FocusEvent, FormEvent, useState } from "react";
 
-const NewCard = () => {
+interface NewCardProps {
+  onNoteCreated: (content: string) => void;
+}
+
+const NewCard = ({ onNoteCreated }: NewCardProps) => {
   const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true);
   const [content, setContent] = useState("");
 
@@ -32,7 +36,10 @@ const NewCard = () => {
 
   function handleSaveNote(event: FormEvent) {
     event.preventDefault();
-    console.log(content);
+
+    onNoteCreated(content);
+    setContent("");
+    setShouldShowOnboarding(true);
   }
 
   return (
@@ -75,6 +82,7 @@ const NewCard = () => {
                   placeholder="Digite sua nota aqui"
                   onChange={handleContentChanged}
                   onBlur={handleContentBlur}
+                  value={content}
                 />
               )}
             </div>
